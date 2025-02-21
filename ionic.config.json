@@ -1,0 +1,7 @@
+{
+  "name": "trove.scanner.ionic.pwa",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
