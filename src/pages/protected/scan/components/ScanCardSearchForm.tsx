@@ -1,4 +1,4 @@
-import { IonList, IonItem, IonLabel } from '@ionic/react';
+import { IonList, IonItem, IonLabel, useIonRouter } from '@ionic/react';
 import { InputFormField } from '@src/pages/components/form';
 import ActionButton from '@src/pages/components/form/ActionButton';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -26,6 +26,8 @@ const ScanCardSearchForm: React.FC<ScanCardSearchFormProps> = ({
       onSearchStarted(formData.searchTerm);
     }
   };
+
+  const { push } = useIonRouter();
 
   return (
     <>
@@ -57,6 +59,14 @@ const ScanCardSearchForm: React.FC<ScanCardSearchFormProps> = ({
           onClick={handleSubmit(onSubmit)}
         />
       </form>
+      <ActionButton
+        label='Scan'
+        expand='full'
+        className='ion-margin'
+        isLoading={isSubmitting}
+        isDisabled={false}
+        onClick={() => push('/scan-qrcode', 'forward')}
+      />
     </>
   );
 };

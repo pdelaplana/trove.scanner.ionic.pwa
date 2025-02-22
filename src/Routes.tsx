@@ -21,6 +21,7 @@ import {
   cashOutline,
 } from 'ionicons/icons';
 import ScanPage from './pages/protected/scan/ScanCardPage';
+import CameraLauncher from './pages/components/cameraLauncher/CameraLauncher';
 
 export const ROUTES = {
   SIGNIN: '/signin',
@@ -123,6 +124,9 @@ const Routes: React.FC = () => {
           </Route>
 
           {/* Protected routes */}
+          <ProtectedRoute path='/scan-qrcode' exact>
+            <CameraLauncher />
+          </ProtectedRoute>
           <ProtectedRoute path={'/'}>
             <TabRoutes />
           </ProtectedRoute>
