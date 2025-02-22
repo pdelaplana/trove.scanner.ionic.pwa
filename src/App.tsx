@@ -40,7 +40,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AuthProvider } from './features/auth/AuthProvider';
 import Routes from './Routes';
 
-setupIonicReact();
+setupIonicReact({ mode: 'md' });
 
 const queryClient = new QueryClient({
   defaultOptions: {
