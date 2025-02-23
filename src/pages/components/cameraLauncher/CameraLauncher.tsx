@@ -13,6 +13,7 @@ import jsQR from 'jsqr';
 import './cameraLauncher.css';
 import BasePageLayout from '../layouts/BasePageLayout';
 import CenterContainer from '../layouts/CenterContainer';
+import CameraSelector from './CameraSelector';
 
 const CameraLauncher: React.FC = () => {
   const [scanning, setScanning] = useState(false);
@@ -23,6 +24,12 @@ const CameraLauncher: React.FC = () => {
   const history = useHistory();
   const streamRef = useRef<MediaStream | null>(null);
   const animationRef = useRef<number | null>(null);
+
+  const [selectedCameraId, setSelectedCameraId] = useState<string>('');
+
+  const handleCameraSelect = (deviceId: string) => {
+    setSelectedCameraId(deviceId);
+  };
 
   const startScanner = async () => {
     setError(null);
@@ -38,10 +45,13 @@ const CameraLauncher: React.FC = () => {
       let stream = null;
 
       try {
-        // First try to get any available camera
-        stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-        });
+        // Use the selected camera if available
+        const constraints = {
+          video: selectedCameraId
+            ? { deviceId: { exact: selectedCameraId } }
+            : true,
+        };
+        stream = await navigator.mediaDevices.getUserMedia(constraints);
       } catch (initialError) {
         console.log(
           "Couldn't access default camera, trying specific options:",
@@ -193,8 +203,12 @@ const CameraLauncher: React.FC = () => {
         ) : (
           <div className='scanner-placeholder'>
             <IonText color='medium'>
-              <p>Press the camera button to scan a QR code</p>
+              <p>
+                Select a camera on your device and press the button to scan a QR
+                code
+              </p>
             </IonText>
+            <CameraSelector onSelectCamera={handleCameraSelect} />
 
             <IonButton
               expand='block'
