@@ -2,11 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   IonButton,
-  IonContent,
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonIcon,
   IonFab,
   IonFabButton,
@@ -112,7 +107,7 @@ const CameraLauncher: React.FC = () => {
     const canvas = canvasRef.current;
 
     if (video && canvas && video.readyState === video.HAVE_ENOUGH_DATA) {
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
       if (ctx) {
         canvas.height = video.videoHeight;
@@ -149,16 +144,14 @@ const CameraLauncher: React.FC = () => {
       // You could navigate to a route in your app
       // Or extract parameters from the URL and process them
 
-      if (url.pathname.includes('process-request')) {
+      if (url.pathname.includes('scan')) {
         // Extract parameters from the URL
         const params = new URLSearchParams(url.search);
-        const requestId = params.get('requestId');
-        const action = params.get('action');
+        const memberno = params.get('memberno');
+        const businessid = params.get('businessid');
 
         // Navigate to a route in your app with the parameters
-        history.push(
-          `/process-request?requestId=${requestId}&action=${action}`
-        );
+        history.push(`/scan?memberno=${memberno}&businessid=${businessid}`);
       } else {
         // Handle other URLs
         window.open(data, '_blank');
@@ -166,9 +159,14 @@ const CameraLauncher: React.FC = () => {
     } catch (e) {
       // Not a URL, handle as plain text
       console.log('Scanned data:', data);
-      alert(`Scanned data: ${data}`);
     }
   };
+
+  useEffect(() => {
+    if (scanning) {
+      scanQRCode();
+    }
+  }, [scanning]);
 
   // Clean up on component unmount
   useEffect(() => {
@@ -178,47 +176,45 @@ const CameraLauncher: React.FC = () => {
   }, []);
 
   return (
-    <BasePageLayout title='QR Code Scanner'>
-      <CenterContainer>
-        <div className='scanner-container'>
-          {scanning ? (
-            <>
-              <video ref={videoRef} className='scanner-video' playsInline />
-              <canvas ref={canvasRef} className='scanner-canvas' />
-              <div className='scan-region-highlight'></div>
+    <>
+      <div className='scanner-container'>
+        {scanning ? (
+          <>
+            <video ref={videoRef} className='scanner-video' playsInline />
+            <canvas ref={canvasRef} className='scanner-canvas' />
+            <div className='scan-region-highlight'></div>
 
-              <IonFab vertical='bottom' horizontal='end' slot='fixed'>
-                <IonFabButton onClick={stopScanner} color='danger'>
-                  <IonIcon icon={close} />
-                </IonFabButton>
-              </IonFab>
-            </>
-          ) : (
-            <div className='scanner-placeholder'>
-              <IonText color='medium'>
-                <p>Press the camera button to scan a QR code</p>
+            <IonFab vertical='bottom' horizontal='center' slot='fixed'>
+              <IonFabButton onClick={stopScanner} color='danger'>
+                <IonIcon icon={close} />
+              </IonFabButton>
+            </IonFab>
+          </>
+        ) : (
+          <div className='scanner-placeholder'>
+            <IonText color='medium'>
+              <p>Press the camera button to scan a QR code</p>
+            </IonText>
+
+            <IonButton
+              expand='block'
+              onClick={startScanner}
+              className='scanner-button'
+            >
+              <IonIcon slot='start' icon={camera} />
+              Start Scanner
+            </IonButton>
+
+            {error && (
+              <IonText color='danger'>
+                <p>{error}</p>
               </IonText>
-
-              <IonButton
-                expand='block'
-                onClick={startScanner}
-                className='scanner-button'
-              >
-                <IonIcon slot='start' icon={camera} />
-                Start Scanner
-              </IonButton>
-
-              {error && (
-                <IonText color='danger'>
-                  <p>{error}</p>
-                </IonText>
-              )}
-            </div>
-          )}
-        </div>
-        <IonLoading isOpen={loading} message='Accessing camera...' />
-      </CenterContainer>
-    </BasePageLayout>
+            )}
+          </div>
+        )}
+      </div>
+      <IonLoading isOpen={loading} message='Accessing camera...' />
+    </>
   );
 };
 

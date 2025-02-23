@@ -1,6 +1,7 @@
 import { IonList, IonItem, IonLabel, useIonRouter } from '@ionic/react';
 import { InputFormField } from '@src/pages/components/form';
 import ActionButton from '@src/pages/components/form/ActionButton';
+import { Divider } from '@src/pages/components/ui/Divider';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface ScanCardSearchFormProps {
@@ -32,16 +33,29 @@ const ScanCardSearchForm: React.FC<ScanCardSearchFormProps> = ({
   return (
     <>
       <div className='ion-margin'>
-        <h2>Add Points</h2>
-        <p>Add loyalty points for purchases made by your customer.</p>
+        <h2>Scan Card</h2>
+        <p>Scan customer's QR code</p>
       </div>
+
+      <ActionButton
+        label='Scan'
+        expand='full'
+        className='ion-margin'
+        isLoading={isSubmitting}
+        isDisabled={false}
+        onClick={() => push('/scan-qrcode', 'forward')}
+      />
+      <Divider>Or</Divider>
+
       <form>
         <IonList lines='none'>
           <IonItem>
+            <IonLabel>Enter membership number, phone, or email</IonLabel>
+          </IonItem>
+          <IonItem>
             <IonLabel>
               <InputFormField
-                label='Customer Membership No, Phone No, or Email'
-                placeholder='Provide a membership number, phone number, or email to identify the customer'
+                label='Membership No, Phone No, or Email'
                 name='searchTerm'
                 fill='outline'
                 register={register}
@@ -59,14 +73,6 @@ const ScanCardSearchForm: React.FC<ScanCardSearchFormProps> = ({
           onClick={handleSubmit(onSubmit)}
         />
       </form>
-      <ActionButton
-        label='Scan'
-        expand='full'
-        className='ion-margin'
-        isLoading={isSubmitting}
-        isDisabled={false}
-        onClick={() => push('/scan-qrcode', 'forward')}
-      />
     </>
   );
 };
