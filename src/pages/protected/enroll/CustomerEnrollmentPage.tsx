@@ -1,4 +1,10 @@
-import { IonList, IonItem, IonLabel, useIonRouter } from '@ionic/react';
+import {
+  IonList,
+  IonItem,
+  IonLabel,
+  useIonRouter,
+  IonText,
+} from '@ionic/react';
 import { LoyaltyProgram } from '@src/domain';
 import { useBusiness } from '@src/features/business/BusinessProvider';
 import useEnrollCustomerFunction from '@src/features/functions/useEnrollCustomerFunction';
@@ -81,6 +87,13 @@ const CustomerEnrollmentPage: React.FC = () => {
     <BasePageLayout title='Enroll' showLogo={true} showBackButton={false}>
       <CenterContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
+          <div className='ion-padding'>
+            <h2>Enroll Customer</h2>
+            <p>
+              Fill in the customer details below to enroll them in a loyalty
+              program.
+            </p>
+          </div>
           <IonList>
             <IonItem lines='none'>
               <IonLabel>
@@ -135,15 +148,14 @@ const CustomerEnrollmentPage: React.FC = () => {
                   fill='outline'
                   register={register}
                   setValue={setValue}
-                  /*
                   validationRules={{
                     required: 'Phone is required',
                     pattern: {
-                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                      message: 'Invalid phone address',
+                      value:
+                        /^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/,
+                      message: 'Invalid phone number format',
                     },
                   }}
-                  */
                   error={errors?.phone}
                 />
               </IonLabel>
