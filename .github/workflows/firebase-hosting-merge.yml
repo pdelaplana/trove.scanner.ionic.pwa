@@ -33,7 +33,7 @@ jobs:
           VITE_CLOUD_FUNCTIONS_EARNPOINTS_URL: 'https://us-central1-trove-development-2a92d.cloudfunctions.net/earnPoints'
           VITE_CLOUD_FUNCTIONS_CLAIMREWARD_URL: 'https://us-central1-trove-development-2a92d.cloudfunctions.net/claimReward'
           VITE_CLOUD_FUNCTIONS_DECRYPT_APIKEY_URL: 'https://us-central1-trove-development-2a92d.cloudfunctions.net/decryptApiKey'
-        run: npm run buil
+        run: npm run build
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
