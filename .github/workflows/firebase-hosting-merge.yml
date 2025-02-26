@@ -32,7 +32,8 @@ jobs:
           VITE_CLOUD_FUNCTIONS_GETLOYALTYCARDINFO_URL: 'https://us-central1-trove-development-2a92d.cloudfunctions.net/getLoyaltyCardInfo'
           VITE_CLOUD_FUNCTIONS_EARNPOINTS_URL: 'https://us-central1-trove-development-2a92d.cloudfunctions.net/earnPoints'
           VITE_CLOUD_FUNCTIONS_CLAIMREWARD_URL: 'https://us-central1-trove-development-2a92d.cloudfunctions.net/claimReward'
-        run: npm run build
+          VITE_CLOUD_FUNCTIONS_DECRYPT_APIKEY_URL: 'https://us-central1-trove-development-2a92d.cloudfunctions.net/decryptApiKey'
+        run: npm run buil
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
