@@ -1,10 +1,4 @@
-import {
-  IonList,
-  IonItem,
-  IonLabel,
-  useIonRouter,
-  IonText,
-} from '@ionic/react';
+import { IonList, IonItem, IonLabel, useIonRouter } from '@ionic/react';
 import { LoyaltyProgram } from '@src/domain';
 import { useBusiness } from '@src/features/business/BusinessProvider';
 import useEnrollCustomerFunction from '@src/features/functions/useEnrollCustomerFunction';
@@ -77,14 +71,19 @@ const CustomerEnrollmentPage: React.FC = () => {
     if (isSuccess) {
       showNotification('Customer enrolled successfully');
       reset();
-      //push('/manage/customers', 'back', 'pop');
     } else if (!isPending && error) {
       showErrorNotification('Failed to enroll customer');
     }
   }, [isSuccess, error]);
 
   return (
-    <BasePageLayout title='Enroll' showLogo={true} showBackButton={false}>
+    <BasePageLayout
+      title='Enroll'
+      showLogo={true}
+      showBackButton={false}
+      showProfileIcon={false}
+      showSignoutButton={true}
+    >
       <CenterContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className='ion-padding'>
