@@ -18,7 +18,16 @@ import {
   updateEmail as updateAuthEmail,
 } from 'firebase/auth';
 import { Preferences } from '@capacitor/preferences';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from 'firebase/firestore';
+import { get } from 'react-hook-form';
 
 type profileFields = 'businessId' | 'customerId' | 'role';
 

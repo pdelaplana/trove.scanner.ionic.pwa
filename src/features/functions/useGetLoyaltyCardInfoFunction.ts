@@ -1,20 +1,20 @@
 import { LoyaltyCard } from '@src/domain';
 import { useQuery } from '@tanstack/react-query';
 
-const useGetLoyaltyCardInfoFunction = (membershipId: string) => {
+const useGetLoyaltyCardInfoFunction = (lookupid: string, apikey: string) => {
   const apiUrl = import.meta.env.VITE_CLOUD_FUNCTIONS_GETLOYALTYCARDINFO_URL;
   return useQuery({
-    queryKey: ['useGetLoyaltyCardInfoFunction', membershipId],
+    queryKey: ['useGetLoyaltyCardInfoFunction', lookupid],
     queryFn: async () => {
       try {
-        if (!membershipId) {
+        if (!lookupid || !apikey) {
           return null;
         }
-        const response = await fetch(`${apiUrl}?membershipId=${membershipId}`, {
+        const response = await fetch(`${apiUrl}?lookupid=${lookupid}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'x-api-key': import.meta.env.VITE_CLOUD_FUNCTIONS_API_KEY,
+            'x-api-key': apikey,
           },
         });
         return { ...(await response.json()) } as LoyaltyCard & {

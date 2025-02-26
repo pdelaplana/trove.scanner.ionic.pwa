@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { ScanCardPageState } from '../ScanCardPage';
 import { useFormatters } from '@src/pages/components/hooks';
 import EmptySection from '@src/pages/components/layouts/EmptySection';
+import { useBusiness } from '@src/features/business/BusinessProvider';
 
 interface ScanCardSearchResultsProps {
   membershipId: string;
@@ -17,7 +18,11 @@ const ScanCardSearchResults: React.FC<ScanCardSearchResultsProps> = ({
   onCustomerLoyaltyCardFound,
   onPageStateChange,
 }) => {
-  const { data, isLoading } = useGetLoyaltyCardInfoFunction(membershipId);
+  const { apiKey } = useBusiness();
+  const { data, isLoading } = useGetLoyaltyCardInfoFunction(
+    membershipId,
+    apiKey
+  );
 
   const { formatNumber, formatDate } = useFormatters();
 

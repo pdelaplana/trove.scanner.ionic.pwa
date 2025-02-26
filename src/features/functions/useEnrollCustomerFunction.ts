@@ -1,25 +1,34 @@
 import { useMutation } from '@tanstack/react-query';
 
-const useEarnPointsFunction = (apikey: string) => {
-  const apiUrl = import.meta.env.VITE_CLOUD_FUNCTIONS_EARNPOINTS_URL;
+const useEnrollCustomerFunction = (apiKey: string) => {
+  const apiUrl = import.meta.env.VITE_CLOUD_FUNCTIONS_ENROLLCUSTOMER_URL;
   return useMutation({
     mutationFn: async ({
-      membershipNumber,
-      amount,
+      name,
+      email,
+      phone,
+      loyaltyProgramNumber,
     }: {
-      membershipNumber: string;
-      amount: number;
+      name: string;
+      email: string;
+      phone: string;
+      loyaltyProgramNumber: string;
     }) => {
+      if (!apiKey) {
+        return null;
+      }
       try {
         const response = await fetch(apiUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'x-api-key': apikey,
+            'x-api-key': apiKey,
           },
           body: JSON.stringify({
-            membershipNumber,
-            amount,
+            name,
+            email,
+            phone,
+            loyaltyProgramNumber,
           }),
         });
         return await response.json();
@@ -34,4 +43,4 @@ const useEarnPointsFunction = (apikey: string) => {
   });
 };
 
-export default useEarnPointsFunction;
+export default useEnrollCustomerFunction;

@@ -5,6 +5,7 @@ import { InputFormField, ActionButton } from '@src/pages/components/form';
 import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import useEarnPointsFunction from '@src/features/functions/useEarnPointsFunction';
+import { useBusiness } from '@src/features/business/BusinessProvider';
 
 interface ScanCardPurchaseAmountFormProps {
   membershipNumber?: string;
@@ -19,7 +20,8 @@ const ScanCardPurchaseAmountForm: React.FC<ScanCardPurchaseAmountFormProps> = ({
   onTransactionCompleted,
   onPageStateChange,
 }) => {
-  const { mutateAsync: earnPointsAsync } = useEarnPointsFunction();
+  const { apiKey } = useBusiness();
+  const { mutateAsync: earnPointsAsync } = useEarnPointsFunction(apiKey);
   const {
     register,
     setValue,

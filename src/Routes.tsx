@@ -16,18 +16,20 @@ import ProtectedRoute from '@pages/components/routing/ProtectedRoute';
 import SigninPage from './pages/public/signin/SigninPage';
 import HomePage from './pages/protected/home/HomePage';
 import {
-  homeOutline,
   ellipsisHorizontalOutline,
   cashOutline,
+  personAddOutline,
 } from 'ionicons/icons';
 import ScanPage from './pages/protected/scan/ScanCardPage';
-import CameraLauncher from './pages/components/cameraLauncher/CameraLauncher';
 import CameraLauncherPage from './pages/protected/scan/CameraLauncherPage';
+import { BusinessProvider } from './features/business/BusinessProvider';
+import CustomerEnrollmentPage from './pages/protected/enroll/CustomerEnrollmentPage';
 
 export const ROUTES = {
   SIGNIN: '/signin',
   HOME: '/home',
   SCAN: '/scan',
+  ENROLL: '/enroll',
 } as const;
 
 interface AuthState {
@@ -44,6 +46,10 @@ const TabRoutes = () => {
           <ProtectedRoute path={ROUTES.SCAN} exact>
             <ScanPage />
           </ProtectedRoute>
+          <ProtectedRoute path={ROUTES.ENROLL} exact>
+            <CustomerEnrollmentPage />
+          </ProtectedRoute>
+
           <ProtectedRoute path='/manage' exact>
             <HomePage />
           </ProtectedRoute>
@@ -53,6 +59,11 @@ const TabRoutes = () => {
         <IonTabButton tab='home' href={ROUTES.SCAN}>
           <IonIcon aria-hidden='true' icon={cashOutline} />
           <IonLabel>Scan Card</IonLabel>
+        </IonTabButton>
+
+        <IonTabButton tab='enroll' href={ROUTES.ENROLL}>
+          <IonIcon aria-hidden='true' icon={personAddOutline} />
+          <IonLabel>Enroll</IonLabel>
         </IonTabButton>
 
         <IonTabButton tab='manage' href='/manage'>
@@ -129,7 +140,9 @@ const Routes: React.FC = () => {
             <CameraLauncherPage />
           </ProtectedRoute>
           <ProtectedRoute path={'/'}>
-            <TabRoutes />
+            <BusinessProvider businessId={user?.businessId ?? ''}>
+              <TabRoutes />
+            </BusinessProvider>
           </ProtectedRoute>
 
           {/* Fallback route - must be last */}
