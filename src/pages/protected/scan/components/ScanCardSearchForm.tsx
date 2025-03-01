@@ -32,9 +32,9 @@ const ScanCardSearchForm: React.FC<ScanCardSearchFormProps> = ({
 
   return (
     <>
-      <div className='ion-margin'>
-        <h2>Scan Card</h2>
-        <p>Scan customer's QR code</p>
+      <div className='ion-padding '>
+        <h2>Scan Loyalty QR Code</h2>
+        <p>Scan customer's loyalty QR code to earn points</p>
       </div>
 
       <ActionButton
@@ -45,17 +45,17 @@ const ScanCardSearchForm: React.FC<ScanCardSearchFormProps> = ({
         isDisabled={false}
         onClick={() => push('/scan-qrcode', 'forward')}
       />
-      <Divider>Or</Divider>
 
+      <Divider style={{ marginTop: '35px' }}>Or</Divider>
+      <div className='ion-no-padding ion-padding-start ion-padding-end ion-padding-top'>
+        <p> Enter customer's membership number, phone or email </p>
+      </div>
       <form>
         <IonList lines='none'>
           <IonItem>
-            <IonLabel>Enter membership number, phone, or email</IonLabel>
-          </IonItem>
-          <IonItem>
             <IonLabel>
               <InputFormField
-                label='Membership No, Phone No, or Email'
+                label='Membership No, Phone, Email or Rewards Code'
                 name='searchTerm'
                 fill='outline'
                 register={register}

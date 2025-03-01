@@ -16,8 +16,6 @@ export enum ScanCardPageState {
 }
 
 const ScanCardPage: React.FC = () => {
-  //const { memberno } = useParams<{ memberno?: string }>();
-
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const memberno = queryParams.get('memberno');
