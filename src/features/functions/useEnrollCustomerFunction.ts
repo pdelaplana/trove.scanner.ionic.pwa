@@ -31,14 +31,19 @@ const useEnrollCustomerFunction = (apiKey: string) => {
             loyaltyProgramNumber,
           }),
         });
-        return await response.json();
+        if (response.status !== 200) {
+          throw new Error(`${response.status} ${response.statusText}`);
+        }
+        const data = await response.json();
+        return data.loyaltyCard;
       } catch (error) {
-        throw new Error('Error adding document: ' + error);
+        throw new Error('Error enrolling customer: ' + error);
       }
     },
-    onSuccess: (data) => {},
-    onError: (error: unknown) => {
-      console.error('Error adding document: ', error);
+    //onSuccess: (data) => {},
+    onError: (error) => {
+      console.error(error);
+      throw error;
     },
   });
 };
