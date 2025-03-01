@@ -30,6 +30,7 @@ export const ROUTES = {
   HOME: '/home',
   SCAN: '/scan',
   ENROLL: '/enroll',
+  ROOT: '/',
 } as const;
 
 interface AuthState {
@@ -53,6 +54,10 @@ const TabRoutes = () => {
           <ProtectedRoute path='/manage' exact>
             <HomePage />
           </ProtectedRoute>
+
+          <Route path='*'>
+            <Redirect to={ROUTES.SCAN} />
+          </Route>
         </Switch>
       </IonRouterOutlet>
       <IonTabBar slot='bottom'>
@@ -139,7 +144,7 @@ const Routes: React.FC = () => {
           <ProtectedRoute path='/scan-qrcode' exact>
             <CameraLauncherPage />
           </ProtectedRoute>
-          <ProtectedRoute path={'/'}>
+          <ProtectedRoute path={ROUTES.ROOT}>
             <BusinessProvider businessId={user?.businessId ?? ''}>
               <TabRoutes />
             </BusinessProvider>
@@ -147,7 +152,7 @@ const Routes: React.FC = () => {
 
           {/* Fallback route - must be last */}
           <Route path='*'>
-            <Redirect to={ROUTES.HOME} />
+            <Redirect to={ROUTES.SCAN} />
           </Route>
         </Switch>
       </IonRouterOutlet>
