@@ -8,7 +8,7 @@ import {
   ActionButton,
 } from '@src/pages/components/form';
 import { useAppNotifications } from '@src/pages/components/hooks';
-import { isValidPhoneNumber } from 'libphonenumber-js';
+import { CountryCode, isValidPhoneNumber } from 'libphonenumber-js';
 import { useMemo, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -156,18 +156,15 @@ const CustomerEnrollmentForm: React.FC<CustomerEnrollmentFormProps> = ({
                 validate: (value: string) => {
                   try {
                     return (
-                      isValidPhoneNumber(value, 'AU') || 'Invalid phone number'
+                      isValidPhoneNumber(
+                        value,
+                        (business?.phoneCountryCode as CountryCode) ?? undefined
+                      ) || 'Invalid phone number'
                     );
                   } catch (error) {
                     return 'Invalid phone number';
                   }
                 },
-                /*
-                pattern: {
-                  value: /^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/,
-                  message: 'Invalid phone number format',
-                },
-                */
               }}
               error={errors?.phone}
             />
