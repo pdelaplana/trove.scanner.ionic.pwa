@@ -15,6 +15,7 @@ import { useAuth } from '@src/features/auth/AuthProvider';
 import { personOutline, exitOutline } from 'ionicons/icons';
 import { PropsWithChildren } from 'react';
 import HeaderLogo from '../ui/HeaderLogo';
+import { usePrompt } from '../hooks';
 
 interface BasePageProps extends PropsWithChildren {
   title: string;
@@ -40,6 +41,15 @@ const BasePageLayout: React.FC<BasePageProps> = ({
   footer,
 }) => {
   const { signout } = useAuth();
+  const { showConfirmPrompt } = usePrompt();
+
+  const handleSignout = () => {
+    showConfirmPrompt({
+      title: 'Sign out',
+      message: 'Are you sure you want to sign out?',
+      onConfirm: signout,
+    });
+  };
   useIonViewWillEnter(() => {
     if (title) {
       document.title = title + ' - Trove';
@@ -64,7 +74,7 @@ const BasePageLayout: React.FC<BasePageProps> = ({
               </IonButton>
             )}
             {showSignoutButton && (
-              <IonButton onClick={signout}>
+              <IonButton onClick={handleSignout}>
                 <IonIcon slot='icon-only' icon={exitOutline}></IonIcon>
               </IonButton>
             )}
