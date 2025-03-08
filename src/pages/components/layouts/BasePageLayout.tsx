@@ -16,6 +16,7 @@ import { personOutline, exitOutline } from 'ionicons/icons';
 import { PropsWithChildren } from 'react';
 import HeaderLogo from '../ui/HeaderLogo';
 import { usePrompt } from '../hooks';
+import { ErrorBoundary } from '../ErrorBoundary';
 
 interface BasePageProps extends PropsWithChildren {
   title: string;
@@ -81,7 +82,9 @@ const BasePageLayout: React.FC<BasePageProps> = ({
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <IonContent>{children}</IonContent>
+      <IonContent>
+        <ErrorBoundary>{children}</ErrorBoundary>
+      </IonContent>
       {footer && <IonFooter>{footer}</IonFooter>}
     </IonPage>
   );

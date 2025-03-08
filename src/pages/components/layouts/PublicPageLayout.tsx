@@ -11,6 +11,7 @@ import {
 import CenterContainer from '../layouts/CenterContainer';
 import { PropsWithChildren } from 'react';
 import HeaderLogo from '../ui/HeaderLogo';
+import { ErrorBoundary } from '../ErrorBoundary';
 
 interface PublicPageLayoutProps extends PropsWithChildren {
   title: string;
@@ -34,7 +35,9 @@ const PublicPageLayout: React.FC<PublicPageLayoutProps> = ({
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <CenterContainer>{children}</CenterContainer>
+        <ErrorBoundary>
+          <CenterContainer>{children}</CenterContainer>
+        </ErrorBoundary>
       </IonContent>
     </IonPage>
   );
