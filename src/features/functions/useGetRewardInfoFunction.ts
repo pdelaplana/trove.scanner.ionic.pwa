@@ -25,6 +25,9 @@ const useGetRewardInfoFunction = (rewardCode: string, apikey: string) => {
         throw new Error('Error fetching document: ' + error);
       }
     },
+    enabled: () => {
+      return !!rewardCode && !!apikey;
+    },
   });
 };
 

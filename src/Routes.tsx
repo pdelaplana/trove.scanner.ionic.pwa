@@ -154,9 +154,11 @@ const Routes: React.FC = () => {
             <CameraLauncherPage />
           </ProtectedRoute>
           <ProtectedRoute path={ROUTES.ROOT}>
-            <BusinessProvider businessId={user?.businessId ?? ''}>
-              <TabRoutes />
-            </BusinessProvider>
+            {user?.businessId && (
+              <BusinessProvider businessId={user.businessId}>
+                <TabRoutes />
+              </BusinessProvider>
+            )}
           </ProtectedRoute>
 
           {/* Fallback route - must be last */}

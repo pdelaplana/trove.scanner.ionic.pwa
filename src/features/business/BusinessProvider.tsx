@@ -21,24 +21,19 @@ export const BusinessProvider: React.FC<{
   businessId: string;
   children: ReactNode;
 }> = ({ businessId, children }) => {
-  const {
-    data: business,
-    isLoading,
-    refetch,
-  } = useFetchBusinessById(businessId);
+  const { data: business, isLoading } = useFetchBusinessById(businessId);
 
-  const { data: loyaltyPrograms } = useFetchLoyaltyProgramsByBusinessId(
-    business?.id ?? ''
-  );
+  const { data: loyaltyPrograms } =
+    useFetchLoyaltyProgramsByBusinessId(businessId);
 
-  const { data: apiKey } = useFetchApiKeyByBusinessId(business?.id ?? '');
+  const { data: apiKey } = useFetchApiKeyByBusinessId(businessId);
 
   return (
     <BusinessContext.Provider
       value={{
         business: business ?? undefined,
         loyaltyPrograms,
-        apiKey: apiKey ?? '',
+        apiKey,
         isLoading,
       }}
     >
@@ -54,6 +49,3 @@ export const useBusiness = (): BusinessContextType => {
   }
   return context;
 };
-function useFetchAllLoyaltyPrograms(): { data: any } {
-  throw new Error('Function not implemented.');
-}

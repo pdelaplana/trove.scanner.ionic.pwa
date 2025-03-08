@@ -21,7 +21,7 @@ const ScanCardSearchResults: React.FC<ScanCardSearchResultsProps> = ({
   const { apiKey } = useBusiness();
   const { data, isLoading } = useGetLoyaltyCardInfoFunction(
     membershipId,
-    apiKey
+    apiKey ?? ''
   );
 
   const { formatNumber, formatDate } = useFormatters();
@@ -40,9 +40,12 @@ const ScanCardSearchResults: React.FC<ScanCardSearchResultsProps> = ({
     onPageStateChange(ScanCardPageState.ADD_TRANSACTION);
   };
 
+  if (!apiKey || isLoading) {
+    return <IonLoading isOpen={true} />;
+  }
+
   return (
     <>
-      {isLoading && <IonLoading isOpen={isLoading} />}
       {data && !data?.id && (
         <>
           <EmptySection

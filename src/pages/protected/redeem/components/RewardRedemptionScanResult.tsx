@@ -36,8 +36,14 @@ const RewardRedemptionScanResult: React.FC<RewardRedemptionScanResultProps> = ({
   onPageStateChange,
 }) => {
   const { apiKey } = useBusiness();
+  const { data, isLoading } = useGetRewardInfoFunction(
+    rewardCode,
+    apiKey ?? '' // Provide a default value or handle the undefined case
+  );
 
-  const { data, isLoading } = useGetRewardInfoFunction(rewardCode, apiKey);
+  if (!apiKey || isLoading) {
+    return <IonLoading isOpen={true} />;
+  }
 
   const isExpired =
     data?.customerReward.expiryDate &&
@@ -59,8 +65,7 @@ const RewardRedemptionScanResult: React.FC<RewardRedemptionScanResultProps> = ({
 
   return (
     <>
-      {isLoading && <IonLoading isOpen={isLoading} />}
-      {!isLoading && !data?.customerReward && (
+      {!isLoading && !data && (
         <NotFoundOrExpiredReward
           handleBack={handleBack}
           heading='Reward not found'
@@ -84,7 +89,7 @@ const RewardRedemptionScanResult: React.FC<RewardRedemptionScanResultProps> = ({
           buttonLabel='Search Again'
         />
       )}
-      {data && data?.customerReward.id && !isExpired && !isRedeemed && (
+      {data && !isExpired && !isRedeemed && (
         <>
           <div className='ion-margin'>
             <h2>Confirm Reward</h2>

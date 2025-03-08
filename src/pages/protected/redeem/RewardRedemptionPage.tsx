@@ -7,7 +7,7 @@ import RewardRedemptionFinalizeForm from './components/RewardRedemptionFinalizeF
 import { LoyaltyCardTransaction } from '@src/domain';
 import RewardRedemptionSuccess from './components/RewardRedemptionSuccess';
 import RewardRedemptionFail from './components/RewardRedemptionFail';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 export interface RewardRedemptionPageState {
   viewState: 'scan' | 'review' | 'finalize' | 'success' | 'error';
@@ -18,8 +18,7 @@ export interface RewardRedemptionPageState {
 
 const RewardRedemptionPage: React.FC = () => {
   const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const rewardCode = queryParams.get('rewardcode');
+  const history = useHistory();
 
   const [pageState, setPageState] = useState<RewardRedemptionPageState>({
     viewState: 'scan',
@@ -27,13 +26,20 @@ const RewardRedemptionPage: React.FC = () => {
   });
 
   useEffect(() => {
-    if (rewardCode) {
+    // Read params
+    const params = new URLSearchParams(location.search);
+    const rewardcode = params.get('rewardcode');
+
+    if (rewardcode) {
+      // Process the param
       setPageState({
         viewState: 'review',
-        rewardCode: rewardCode,
+        rewardCode: rewardcode,
       });
+      // Clear by replacing the current URL with one without query params
+      history.replace(location.pathname);
     }
-  }, [rewardCode]);
+  }, [location.search, history, location.pathname]);
 
   return (
     <BasePageLayout

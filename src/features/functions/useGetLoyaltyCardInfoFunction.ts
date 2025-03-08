@@ -29,6 +29,9 @@ const useGetLoyaltyCardInfoFunction = (lookupid: string, apikey: string) => {
         throw new Error('Error fetching document: ' + error);
       }
     },
+    enabled: () => {
+      return !!apikey && !!lookupid;
+    },
   });
 };
 
