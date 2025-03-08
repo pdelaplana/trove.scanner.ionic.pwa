@@ -54,7 +54,7 @@ const CameraLauncher: React.FC = () => {
         stream = await navigator.mediaDevices.getUserMedia(constraints);
       } catch (initialError) {
         console.log(
-          "Couldn't access default camera, trying specific options:",
+          'Unable to access default camera, trying specific options:',
           initialError
         );
 
@@ -151,9 +151,6 @@ const CameraLauncher: React.FC = () => {
       const url = new URL(data);
 
       // Process the URL
-      // You could navigate to a route in your app
-      // Or extract parameters from the URL and process them
-
       if (url.pathname.includes('scan')) {
         // Extract parameters from the URL
         const params = new URLSearchParams(url.search);
@@ -162,6 +159,16 @@ const CameraLauncher: React.FC = () => {
 
         // Navigate to a route in your app with the parameters
         history.push(`/scan?memberno=${memberno}&businessid=${businessid}`);
+      } else if (url.pathname.includes('redeem')) {
+        // Extract parameters from the URL
+        const params = new URLSearchParams(url.search);
+        const rewardcode = params.get('rewardcode');
+        const businessid = params.get('businessid');
+
+        // Navigate to a route in your app with the parameters
+        history.push(
+          `/redeem?rewardcode=${rewardcode}&businessid=${businessid}`
+        );
       } else {
         // Handle other URLs
         window.open(data, '_blank');

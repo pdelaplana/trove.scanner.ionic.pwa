@@ -10,7 +10,7 @@ const decryptKey = async (encryptedKey: string) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      encryptedKey,
+      encryptedKey: encryptedKey,
     }),
   });
   return await response.json();
@@ -33,9 +33,9 @@ const useFetchApiKeyByBusinessId = (businessId: string) => {
         const apiKeySnapshot = await getDocs(apiKeyQueryRef);
         const encryptedKey = apiKeySnapshot.docs[0].data().encryptedApiKey;
 
-        const { decryptedKey } = await decryptKey(encryptedKey);
+        const response = await decryptKey(encryptedKey);
 
-        return decryptedKey;
+        return response.decryptedKey;
       } catch (error) {
         console.error(error);
         return null;

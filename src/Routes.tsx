@@ -19,17 +19,20 @@ import {
   ellipsisHorizontalOutline,
   cashOutline,
   personAddOutline,
+  giftOutline,
 } from 'ionicons/icons';
 import ScanPage from './pages/protected/scan/ScanCardPage';
 import CameraLauncherPage from './pages/protected/scan/CameraLauncherPage';
 import { BusinessProvider } from './features/business/BusinessProvider';
 import CustomerEnrollmentPage from './pages/protected/enroll/CustomerEnrollmentPage';
+import RewardRedemptionPage from './pages/protected/redeem/RewardRedemptionPage';
 
 export const ROUTES = {
   SIGNIN: '/signin',
   HOME: '/home',
   SCAN: '/scan',
   ENROLL: '/enroll',
+  REDEEM: '/redeem',
   ROOT: '/',
 } as const;
 
@@ -50,6 +53,9 @@ const TabRoutes = () => {
           <ProtectedRoute path={ROUTES.ENROLL} exact>
             <CustomerEnrollmentPage />
           </ProtectedRoute>
+          <ProtectedRoute path={ROUTES.REDEEM} exact>
+            <RewardRedemptionPage />
+          </ProtectedRoute>
 
           <ProtectedRoute path='/manage' exact>
             <HomePage />
@@ -63,9 +69,12 @@ const TabRoutes = () => {
       <IonTabBar slot='bottom'>
         <IonTabButton tab='home' href={ROUTES.SCAN}>
           <IonIcon aria-hidden='true' icon={cashOutline} />
-          <IonLabel>Scan Card</IonLabel>
+          <IonLabel>Earn</IonLabel>
         </IonTabButton>
-
+        <IonTabButton tab='redeem' href={ROUTES.REDEEM}>
+          <IonIcon aria-hidden='true' icon={giftOutline} />
+          <IonLabel>Redeem</IonLabel>
+        </IonTabButton>
         <IonTabButton tab='enroll' href={ROUTES.ENROLL}>
           <IonIcon aria-hidden='true' icon={personAddOutline} />
           <IonLabel>Enroll</IonLabel>

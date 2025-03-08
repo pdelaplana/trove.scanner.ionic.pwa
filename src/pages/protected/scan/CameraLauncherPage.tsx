@@ -4,7 +4,12 @@ import CenterContainer from '@src/pages/components/layouts/CenterContainer';
 
 const CameraLauncherPage: React.FC = () => {
   return (
-    <BasePageLayout title='QR Code Scanner' defaultBackButtonHref='/scan'>
+    <BasePageLayout
+      title='QR Code Scanner'
+      defaultBackButtonHref='/scan'
+      showSignoutButton={false}
+      showProfileIcon={false}
+    >
       <CenterContainer>
         <CameraLauncher />
       </CenterContainer>
