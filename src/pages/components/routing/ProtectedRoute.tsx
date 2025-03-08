@@ -21,10 +21,6 @@ const ProtectedRoute: React.FC<IProtectedRouteProps> = ({
     return <IonLoading isOpen={authStateLoading}></IonLoading>;
   }
 
-  if (!isAuthenticated) {
-    return <Redirect to='/signin' />;
-  }
-
   return (
     <Route
       {...rest}

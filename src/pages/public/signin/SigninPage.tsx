@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   IonInput,
   IonButton,
@@ -15,6 +15,15 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { ValidationError } from '@pages/components/form';
 import PublicPageLayout from '@pages/components/layouts/PublicPageLayout';
 import { ROUTES } from '@src/Routes';
+import { useLocation } from 'react-router-dom';
+
+// Define the type for the location state
+interface LocationState {
+  from: {
+    pathname: string;
+    search: string;
+  };
+}
 
 interface ISigninForm {
   password: string;
@@ -38,7 +47,15 @@ const SigninPage: React.FC = () => {
     }
   };
 
+  const location = useLocation<LocationState>();
+
   const router = useIonRouter();
+
+  // Get the redirect path from location state or default to ROUTES.SCAN
+  const redirectUrl = useMemo(() => {
+    const state = location.state as LocationState;
+    return state ? `${state.from.pathname}${state.from.search}` : ROUTES.SCAN;
+  }, [location]);
 
   useEffect(() => {
     if (error) {
@@ -50,7 +67,7 @@ const SigninPage: React.FC = () => {
   }, [error]);
 
   useEffect(() => {
-    if (isAuthenticated) router.push(ROUTES.SCAN, 'root', 'replace');
+    if (isAuthenticated) router.push(redirectUrl, 'root', 'replace');
   }, [isAuthenticated]);
 
   return (
