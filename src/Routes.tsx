@@ -14,23 +14,24 @@ import { useAuth, UserRole } from './features/auth/AuthProvider';
 import { useEffect, useState } from 'react';
 import ProtectedRoute from '@pages/components/routing/ProtectedRoute';
 import SigninPage from './pages/public/signin/SigninPage';
-import HomePage from './pages/protected/home/HomePage';
+
 import {
-  ellipsisHorizontalOutline,
   cashOutline,
   personAddOutline,
   giftOutline,
+  scanOutline,
 } from 'ionicons/icons';
-import ScanPage from './pages/protected/scan/ScanCardPage';
-import CameraLauncherPage from './pages/protected/scan/CameraLauncherPage';
 import { BusinessProvider } from './features/business/BusinessProvider';
 import CustomerEnrollmentPage from './pages/protected/enroll/CustomerEnrollmentPage';
 import RewardRedemptionPage from './pages/protected/redeem/RewardRedemptionPage';
+import LoyaltyCardPage from './pages/protected/reward/LoyaltyCardPage';
+import ScanPage from './pages/protected/scan/ScanPage';
 
 export const ROUTES = {
   SIGNIN: '/signin',
-  HOME: '/home',
   SCAN: '/scan',
+  EARN: '/earn',
+  REWARD: '/reward',
   ENROLL: '/enroll',
   REDEEM: '/redeem',
   ROOT: '/',
@@ -50,15 +51,14 @@ const TabRoutes = () => {
           <ProtectedRoute path={ROUTES.SCAN} exact>
             <ScanPage />
           </ProtectedRoute>
+          <ProtectedRoute path={ROUTES.REWARD} exact>
+            <LoyaltyCardPage />
+          </ProtectedRoute>
           <ProtectedRoute path={ROUTES.ENROLL} exact>
             <CustomerEnrollmentPage />
           </ProtectedRoute>
           <ProtectedRoute path={ROUTES.REDEEM} exact>
             <RewardRedemptionPage />
-          </ProtectedRoute>
-
-          <ProtectedRoute path='/manage' exact>
-            <HomePage />
           </ProtectedRoute>
 
           <Route path='*'>
@@ -67,9 +67,13 @@ const TabRoutes = () => {
         </Switch>
       </IonRouterOutlet>
       <IonTabBar slot='bottom'>
-        <IonTabButton tab='home' href={ROUTES.SCAN}>
+        <IonTabButton tab='scan' href={ROUTES.SCAN}>
+          <IonIcon aria-hidden='true' icon={scanOutline} />
+          <IonLabel>Scan</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab='reward' href={ROUTES.REWARD}>
           <IonIcon aria-hidden='true' icon={cashOutline} />
-          <IonLabel>Earn</IonLabel>
+          <IonLabel>Reward</IonLabel>
         </IonTabButton>
         <IonTabButton tab='redeem' href={ROUTES.REDEEM}>
           <IonIcon aria-hidden='true' icon={giftOutline} />
@@ -78,11 +82,6 @@ const TabRoutes = () => {
         <IonTabButton tab='enroll' href={ROUTES.ENROLL}>
           <IonIcon aria-hidden='true' icon={personAddOutline} />
           <IonLabel>Enroll</IonLabel>
-        </IonTabButton>
-
-        <IonTabButton tab='manage' href='/manage'>
-          <IonIcon aria-hidden='true' icon={ellipsisHorizontalOutline} />
-          <IonLabel>Manage</IonLabel>
         </IonTabButton>
       </IonTabBar>
     </IonTabs>
@@ -150,9 +149,6 @@ const Routes: React.FC = () => {
           </Route>
 
           {/* Protected routes */}
-          <ProtectedRoute path='/scan-qrcode' exact>
-            <CameraLauncherPage />
-          </ProtectedRoute>
           <ProtectedRoute path={ROUTES.ROOT}>
             {user?.businessId && (
               <BusinessProvider businessId={user.businessId}>

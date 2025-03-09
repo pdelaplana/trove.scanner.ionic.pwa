@@ -2,26 +2,25 @@ import { LoyaltyCardTransaction } from '@src/domain';
 import BasePageLayout from '@src/pages/components/layouts/BasePageLayout';
 import CenterContainer from '@src/pages/components/layouts/CenterContainer';
 import { useEffect, useState } from 'react';
-import SearchForm from './components/ScanCardSearchForm';
-import ScanCardSearchResults from './components/ScanCardSearchResult';
-import ScanCardPurchaseAmountForm from './components/ScanCardPurchaseAmountForm';
-import ScanCardResult from './components/ScanCardResult';
+import SearchForm from './components/LoyaltyCardSearchForm';
+import ScanCardSearchResults from './components/LoyaltyCardSearchResult';
+import ScanCardPurchaseAmountForm from './components/LoyaltyCardPurchaseForm';
+import ScanCardResult from './components/LoyaltyCardTransactionResult';
 import { useHistory, useLocation } from 'react-router-dom';
 
-export enum ScanCardPageState {
+export enum LoyaltyCardPageState {
   SEARCH = 'SEARCH',
   REVIEW_CUSTOMER = 'REVIEW_CUSTOMER',
   ADD_TRANSACTION = 'ADD_TRANSACTION',
   RESULT = 'RESULT',
 }
 
-const ScanCardPage: React.FC = () => {
+const LoyaltyCardPage: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
 
-  const [currentPageState, setPageCurrentState] = useState<ScanCardPageState>(
-    ScanCardPageState.SEARCH
-  );
+  const [currentPageState, setPageCurrentState] =
+    useState<LoyaltyCardPageState>(LoyaltyCardPageState.SEARCH);
   const [searchTerm, setSearchTerm] = useState<string>('');
 
   const [membershipNumber, setMembershipNumber] = useState<string>('');
@@ -30,10 +29,10 @@ const ScanCardPage: React.FC = () => {
 
   const handleSearchStarted = (term: string) => {
     setSearchTerm(term);
-    setPageCurrentState(ScanCardPageState.REVIEW_CUSTOMER);
+    setPageCurrentState(LoyaltyCardPageState.REVIEW_CUSTOMER);
   };
 
-  const handlePageStateChange = (pageState: ScanCardPageState) => {
+  const handlePageStateChange = (pageState: LoyaltyCardPageState) => {
     setPageCurrentState(pageState);
   };
 
@@ -42,7 +41,7 @@ const ScanCardPage: React.FC = () => {
     const memberno = queryParams.get('memberno');
     if (memberno) {
       setSearchTerm(memberno);
-      setPageCurrentState(ScanCardPageState.REVIEW_CUSTOMER);
+      setPageCurrentState(LoyaltyCardPageState.REVIEW_CUSTOMER);
       // Clear by replacing the current URL with one without query params
       history.replace(location.pathname);
     }
@@ -50,17 +49,17 @@ const ScanCardPage: React.FC = () => {
 
   return (
     <BasePageLayout
-      title='Scan'
+      title='Reward Points'
       showLogo={true}
       showBackButton={false}
       showProfileIcon={false}
       showSignoutButton={true}
     >
       <CenterContainer>
-        {currentPageState === ScanCardPageState.SEARCH && (
+        {currentPageState === LoyaltyCardPageState.SEARCH && (
           <SearchForm onSearchStarted={handleSearchStarted} />
         )}
-        {currentPageState === ScanCardPageState.REVIEW_CUSTOMER && (
+        {currentPageState === LoyaltyCardPageState.REVIEW_CUSTOMER && (
           <ScanCardSearchResults
             membershipId={searchTerm}
             onCustomerLoyaltyCardFound={(membershipNumber) =>
@@ -69,7 +68,7 @@ const ScanCardPage: React.FC = () => {
             onPageStateChange={(state) => setPageCurrentState(state)}
           />
         )}
-        {currentPageState === ScanCardPageState.ADD_TRANSACTION && (
+        {currentPageState === LoyaltyCardPageState.ADD_TRANSACTION && (
           <ScanCardPurchaseAmountForm
             membershipNumber={membershipNumber}
             onTransactionCompleted={(transaction) =>
@@ -78,7 +77,7 @@ const ScanCardPage: React.FC = () => {
             onPageStateChange={(state) => setPageCurrentState(state)}
           />
         )}
-        {currentPageState === ScanCardPageState.RESULT && (
+        {currentPageState === LoyaltyCardPageState.RESULT && (
           <ScanCardResult
             onPageStateChange={(state) => setPageCurrentState(state)}
             loyaltyCardTransaction={loyaltyCardTransaction ?? null}
@@ -89,4 +88,4 @@ const ScanCardPage: React.FC = () => {
   );
 };
 
-export default ScanCardPage;
+export default LoyaltyCardPage;

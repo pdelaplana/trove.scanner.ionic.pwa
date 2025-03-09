@@ -2,14 +2,14 @@ import { IonList, IonItem, IonLabel } from '@ionic/react';
 import { LoyaltyCardTransaction } from '@src/domain';
 import { ActionButton } from '@src/pages/components/form';
 import { useFormatters } from '@src/pages/components/hooks';
-import { ScanCardPageState } from '../ScanCardPage';
+import { LoyaltyCardPageState } from '../LoyaltyCardPage';
 
-interface ScanCardResultProps {
+interface LoyaltyCardTransactionResultProps {
   loyaltyCardTransaction: LoyaltyCardTransaction | null;
-  onPageStateChange: (pageState: ScanCardPageState) => void;
+  onPageStateChange: (pageState: LoyaltyCardPageState) => void;
 }
 
-const ScanCardResult: React.FC<ScanCardResultProps> = ({
+const ScanCardResult: React.FC<LoyaltyCardTransactionResultProps> = ({
   loyaltyCardTransaction,
   onPageStateChange,
 }) => {
@@ -49,7 +49,7 @@ const ScanCardResult: React.FC<ScanCardResultProps> = ({
         <ActionButton
           label='Search Again'
           fill='clear'
-          onClick={() => onPageStateChange(ScanCardPageState.SEARCH)}
+          onClick={() => onPageStateChange(LoyaltyCardPageState.SEARCH)}
           isLoading={false}
           isDisabled={false}
         />

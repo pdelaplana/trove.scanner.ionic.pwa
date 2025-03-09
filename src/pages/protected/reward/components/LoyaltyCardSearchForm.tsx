@@ -2,13 +2,14 @@ import { IonList, IonItem, IonLabel, useIonRouter } from '@ionic/react';
 import { InputFormField } from '@src/pages/components/form';
 import ActionButton from '@src/pages/components/form/ActionButton';
 import { Divider } from '@src/pages/components/ui/Divider';
+import { ROUTES } from '@src/Routes';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-interface ScanCardSearchFormProps {
+interface LoyaltyCardSearchFormProps {
   onSearchStarted: (searchTerm: string) => void;
 }
 
-const ScanCardSearchForm: React.FC<ScanCardSearchFormProps> = ({
+const LoyaltyCardSearchForm: React.FC<LoyaltyCardSearchFormProps> = ({
   onSearchStarted,
 }) => {
   const {
@@ -33,8 +34,11 @@ const ScanCardSearchForm: React.FC<ScanCardSearchFormProps> = ({
   return (
     <>
       <div className='ion-padding '>
-        <h2>Scan Loyalty QR Code</h2>
-        <p>Scan customer's loyalty QR code to earn points</p>
+        <h2>Reward Points</h2>
+        <p>
+          Scan the customer's loyalty QR code to add points to their account for
+          their purchase
+        </p>
       </div>
 
       <ActionButton
@@ -43,7 +47,7 @@ const ScanCardSearchForm: React.FC<ScanCardSearchFormProps> = ({
         className='ion-margin'
         isLoading={isSubmitting}
         isDisabled={false}
-        onClick={() => push('/scan-qrcode', 'forward')}
+        onClick={() => push(ROUTES.SCAN, 'forward')}
       />
 
       <Divider style={{ marginTop: '35px' }}>Or</Divider>
@@ -76,4 +80,4 @@ const ScanCardSearchForm: React.FC<ScanCardSearchFormProps> = ({
     </>
   );
 };
-export default ScanCardSearchForm;
+export default LoyaltyCardSearchForm;

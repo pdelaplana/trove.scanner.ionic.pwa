@@ -3,6 +3,7 @@ import { ActionButton, InputFormField } from '@src/pages/components/form';
 import { Divider } from '@src/pages/components/ui/Divider';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { RewardRedemptionPageState } from '../RewardRedemptionPage';
+import { ROUTES } from '@src/Routes';
 
 interface RewardRedemptionScanFormProps {
   onPageStateChange: (pageState: RewardRedemptionPageState) => void;
@@ -35,9 +36,9 @@ const RewardRedemptionScanForm: React.FC<RewardRedemptionScanFormProps> = ({
 
   return (
     <>
-      <div className='ion-padding '>
-        <h2>Scan Reward QR Code</h2>
-        <p>Scan reward QR code</p>
+      <div className='ion-padding'>
+        <h2>Redeem Reward</h2>
+        <p>Scan the customer's QR code and redeem their reward</p>
       </div>
 
       <ActionButton
@@ -46,7 +47,7 @@ const RewardRedemptionScanForm: React.FC<RewardRedemptionScanFormProps> = ({
         className='ion-margin'
         isLoading={false}
         isDisabled={false}
-        onClick={() => push('/scan-qrcode', 'forward')}
+        onClick={() => push(ROUTES.SCAN, 'forward')}
       />
 
       <Divider style={{ marginTop: '35px' }}>Or</Divider>

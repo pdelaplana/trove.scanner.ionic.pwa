@@ -2,12 +2,13 @@ import CameraLauncher from '@src/pages/components/cameraLauncher/CameraLauncher'
 import BasePageLayout from '@src/pages/components/layouts/BasePageLayout';
 import CenterContainer from '@src/pages/components/layouts/CenterContainer';
 
-const CameraLauncherPage: React.FC = () => {
+const ScanPage: React.FC = () => {
   return (
     <BasePageLayout
-      title='QR Code Scanner'
-      defaultBackButtonHref='/scan'
-      showSignoutButton={false}
+      title='Code Scanner'
+      showLogo={true}
+      showBackButton={false}
+      showSignoutButton={true}
       showProfileIcon={false}
     >
       <CenterContainer>
@@ -16,4 +17,4 @@ const CameraLauncherPage: React.FC = () => {
     </BasePageLayout>
   );
 };
-export default CameraLauncherPage;
+export default ScanPage;

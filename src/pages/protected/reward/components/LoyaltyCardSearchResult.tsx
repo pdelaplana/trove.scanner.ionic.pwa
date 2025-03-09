@@ -2,18 +2,18 @@ import { IonLoading, IonList, IonItem, IonLabel } from '@ionic/react';
 import useGetLoyaltyCardInfoFunction from '@src/features/functions/useGetLoyaltyCardInfoFunction';
 import { ActionButton } from '@src/pages/components/form';
 import { useEffect } from 'react';
-import { ScanCardPageState } from '../ScanCardPage';
+import { LoyaltyCardPageState } from '../LoyaltyCardPage';
 import { useFormatters } from '@src/pages/components/hooks';
 import EmptySection from '@src/pages/components/layouts/EmptySection';
 import { useBusiness } from '@src/features/business/BusinessProvider';
 
-interface ScanCardSearchResultsProps {
+interface LoyaltyCardSearchResultsProps {
   membershipId: string;
   onCustomerLoyaltyCardFound: (membershipNumber: string) => void;
-  onPageStateChange: (pageState: ScanCardPageState) => void;
+  onPageStateChange: (pageState: LoyaltyCardPageState) => void;
 }
 
-const ScanCardSearchResults: React.FC<ScanCardSearchResultsProps> = ({
+const LoyaltyCardSearchResults: React.FC<LoyaltyCardSearchResultsProps> = ({
   membershipId,
   onCustomerLoyaltyCardFound,
   onPageStateChange,
@@ -33,11 +33,11 @@ const ScanCardSearchResults: React.FC<ScanCardSearchResultsProps> = ({
   }, [data]);
 
   const handleBack = () => {
-    onPageStateChange(ScanCardPageState.SEARCH);
+    onPageStateChange(LoyaltyCardPageState.SEARCH);
   };
 
   const handleForward = () => {
-    onPageStateChange(ScanCardPageState.ADD_TRANSACTION);
+    onPageStateChange(LoyaltyCardPageState.ADD_TRANSACTION);
   };
 
   if (!apiKey || isLoading) {
@@ -132,6 +132,7 @@ const ScanCardSearchResults: React.FC<ScanCardSearchResultsProps> = ({
               onClick={handleForward}
               isLoading={false}
               isDisabled={false}
+              style={{ width: '120px' }}
             />
           </div>
         </>
@@ -139,4 +140,4 @@ const ScanCardSearchResults: React.FC<ScanCardSearchResultsProps> = ({
     </>
   );
 };
-export default ScanCardSearchResults;
+export default LoyaltyCardSearchResults;

@@ -1,5 +1,5 @@
 import { LoyaltyCardTransaction } from '@src/domain';
-import { ScanCardPageState } from '../ScanCardPage';
+import { LoyaltyCardPageState } from '../LoyaltyCardPage';
 import { IonList, IonItem, IonLabel } from '@ionic/react';
 import { InputFormField, ActionButton } from '@src/pages/components/form';
 import { useEffect } from 'react';
@@ -7,15 +7,15 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import useEarnPointsFunction from '@src/features/functions/useEarnPointsFunction';
 import { useBusiness } from '@src/features/business/BusinessProvider';
 
-interface ScanCardPurchaseAmountFormProps {
+interface LoyaltyCardPurchaseFormProps {
   membershipNumber?: string;
   onTransactionCompleted: (
     loyaltyCardTransaction: LoyaltyCardTransaction
   ) => void;
-  onPageStateChange: (pageState: ScanCardPageState) => void;
+  onPageStateChange: (pageState: LoyaltyCardPageState) => void;
 }
 
-const ScanCardPurchaseAmountForm: React.FC<ScanCardPurchaseAmountFormProps> = ({
+const LoyaltyCardPurchaseForm: React.FC<LoyaltyCardPurchaseFormProps> = ({
   membershipNumber,
   onTransactionCompleted,
   onPageStateChange,
@@ -44,7 +44,7 @@ const ScanCardPurchaseAmountForm: React.FC<ScanCardPurchaseAmountFormProps> = ({
         amount: parseFloat(formData.amount),
       });
       onTransactionCompleted(result.transaction);
-      onPageStateChange(ScanCardPageState.RESULT);
+      onPageStateChange(LoyaltyCardPageState.RESULT);
       console.log(result);
     }
   };
@@ -78,16 +78,17 @@ const ScanCardPurchaseAmountForm: React.FC<ScanCardPurchaseAmountFormProps> = ({
           <ActionButton
             label='Search Again'
             fill='clear'
-            onClick={() => onPageStateChange(ScanCardPageState.SEARCH)}
+            onClick={() => onPageStateChange(LoyaltyCardPageState.SEARCH)}
             isLoading={false}
             isDisabled={false}
           />
           <ActionButton
-            label='Add Transaction'
+            label='Continue'
             className='ion-margin'
             isLoading={isSubmitting}
             isDisabled={!isDirty}
             onClick={handleSubmit(onSubmit)}
+            style={{ width: '120px' }}
           />
         </div>
       </form>
@@ -95,4 +96,4 @@ const ScanCardPurchaseAmountForm: React.FC<ScanCardPurchaseAmountFormProps> = ({
   );
 };
 
-export default ScanCardPurchaseAmountForm;
+export default LoyaltyCardPurchaseForm;
