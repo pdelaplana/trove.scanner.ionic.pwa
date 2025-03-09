@@ -151,14 +151,14 @@ const CameraLauncher: React.FC = () => {
       const url = new URL(data);
 
       // Process the URL
-      if (url.pathname.includes('scan')) {
+      if (url.pathname.includes('reward')) {
         // Extract parameters from the URL
         const params = new URLSearchParams(url.search);
         const memberno = params.get('memberno');
         const businessid = params.get('businessid');
 
         // Navigate to a route in your app with the parameters
-        history.push(`/earn?memberno=${memberno}&businessid=${businessid}`);
+        history.push(`/reward?memberno=${memberno}&businessid=${businessid}`);
       } else if (url.pathname.includes('redeem')) {
         // Extract parameters from the URL
         const params = new URLSearchParams(url.search);
